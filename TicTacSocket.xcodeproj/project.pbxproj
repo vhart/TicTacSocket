@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		942CA499E06F276CD0A52D87 /* Pods_TicTacSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA7066A284941619156B73D8 /* Pods_TicTacSocket.framework */; };
+		D564DAB81EB7DDB900346189 /* Data+Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564DAB71EB7DDB900346189 /* Data+Extra.swift */; };
+		D564DABA1EB8055700346189 /* DispatchQueue+Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564DAB91EB8055700346189 /* DispatchQueue+Main.swift */; };
+		D564DABC1EB8195700346189 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564DABB1EB8195700346189 /* Board.swift */; };
+		D564DABE1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564DABD1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift */; };
+		D5BEC9B11EB3DFD80085432E /* SocketConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BEC9B01EB3DFD80085432E /* SocketConnector.swift */; };
+		D5BEC9B31EB3EBA60085432E /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BEC9B21EB3EBA60085432E /* Packet.swift */; };
+		D5E185AD1EB2F6CB006E9407 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E185AC1EB2F6CB006E9407 /* Socket.swift */; };
 		D5EE1F641EB28AEE0098AA99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EE1F631EB28AEE0098AA99 /* AppDelegate.swift */; };
 		D5EE1F661EB28AEE0098AA99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EE1F651EB28AEE0098AA99 /* ViewController.swift */; };
 		D5EE1F691EB28AEE0098AA99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5EE1F671EB28AEE0098AA99 /* Main.storyboard */; };
@@ -37,6 +44,13 @@
 /* Begin PBXFileReference section */
 		662CBB2CF325C1E2626441C0 /* Pods-TicTacSocket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacSocket.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacSocket/Pods-TicTacSocket.debug.xcconfig"; sourceTree = "<group>"; };
 		CA7066A284941619156B73D8 /* Pods_TicTacSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicTacSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D564DAB71EB7DDB900346189 /* Data+Extra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Data+Extra.swift"; path = "../Data+Extra.swift"; sourceTree = "<group>"; };
+		D564DAB91EB8055700346189 /* DispatchQueue+Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Main.swift"; path = "../DispatchQueue+Main.swift"; sourceTree = "<group>"; };
+		D564DABB1EB8195700346189 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		D564DABD1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GCDAsyncSocket+Packets.swift"; sourceTree = "<group>"; };
+		D5BEC9B01EB3DFD80085432E /* SocketConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketConnector.swift; sourceTree = "<group>"; };
+		D5BEC9B21EB3EBA60085432E /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		D5E185AC1EB2F6CB006E9407 /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
 		D5EE1F601EB28AEE0098AA99 /* TicTacSocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5EE1F631EB28AEE0098AA99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5EE1F651EB28AEE0098AA99 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -121,10 +135,17 @@
 		D5EE1F621EB28AEE0098AA99 /* TicTacSocket */ = {
 			isa = PBXGroup;
 			children = (
-				D5EE1F631EB28AEE0098AA99 /* AppDelegate.swift */,
-				D5EE1F651EB28AEE0098AA99 /* ViewController.swift */,
 				D5EE1F671EB28AEE0098AA99 /* Main.storyboard */,
 				D5EE1F6A1EB28AEE0098AA99 /* Assets.xcassets */,
+				D5EE1F631EB28AEE0098AA99 /* AppDelegate.swift */,
+				D564DABB1EB8195700346189 /* Board.swift */,
+				D564DAB71EB7DDB900346189 /* Data+Extra.swift */,
+				D564DAB91EB8055700346189 /* DispatchQueue+Main.swift */,
+				D564DABD1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift */,
+				D5BEC9B21EB3EBA60085432E /* Packet.swift */,
+				D5E185AC1EB2F6CB006E9407 /* Socket.swift */,
+				D5BEC9B01EB3DFD80085432E /* SocketConnector.swift */,
+				D5EE1F651EB28AEE0098AA99 /* ViewController.swift */,
 				D5EE1F6C1EB28AEE0098AA99 /* LaunchScreen.storyboard */,
 				D5EE1F6F1EB28AEE0098AA99 /* Info.plist */,
 			);
@@ -337,8 +358,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5BEC9B11EB3DFD80085432E /* SocketConnector.swift in Sources */,
+				D564DABA1EB8055700346189 /* DispatchQueue+Main.swift in Sources */,
 				D5EE1F661EB28AEE0098AA99 /* ViewController.swift in Sources */,
+				D5BEC9B31EB3EBA60085432E /* Packet.swift in Sources */,
 				D5EE1F641EB28AEE0098AA99 /* AppDelegate.swift in Sources */,
+				D564DAB81EB7DDB900346189 /* Data+Extra.swift in Sources */,
+				D564DABE1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift in Sources */,
+				D564DABC1EB8195700346189 /* Board.swift in Sources */,
+				D5E185AD1EB2F6CB006E9407 /* Socket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +619,7 @@
 				D5EE1F8A1EB28AEF0098AA99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5EE1F8B1EB28AEF0098AA99 /* Build configuration list for PBXNativeTarget "TicTacSocketTests" */ = {
 			isa = XCConfigurationList;
@@ -599,6 +628,7 @@
 				D5EE1F8D1EB28AEF0098AA99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5EE1F8E1EB28AEF0098AA99 /* Build configuration list for PBXNativeTarget "TicTacSocketUITests" */ = {
 			isa = XCConfigurationList;
@@ -607,6 +637,7 @@
 				D5EE1F901EB28AEF0098AA99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

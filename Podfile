@@ -5,5 +5,5 @@ use_frameworks!
 target 'TicTacSocket' do
   pod 'Starscream', '~> 2.0.3'
   pod 'CocoaAsyncSocket'
-  pod 'SwiftyJSON'  
+  pod 'SwiftyJSON'
 end
