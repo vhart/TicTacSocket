@@ -1,18 +1,18 @@
 PODS:
+  - Cartography (1.1.0)
   - CocoaAsyncSocket (7.6.0)
-  - Starscream (2.0.4)
-  - SwiftyJSON (3.1.4)
+  - RxSwift (3.4.0)
 
 DEPENDENCIES:
+  - Cartography
   - CocoaAsyncSocket
-  - Starscream (~> 2.0.3)
-  - SwiftyJSON
+  - RxSwift (~> 3.0)
 
 SPEC CHECKSUMS:
+  Cartography: 0538ccb4044acbbda2266335fc58cb4228794d90
   CocoaAsyncSocket: b9d5589f07baf9de8f34cc25abd4fcba28f13805
-  Starscream: df5974ee928b157c8eda8af8de7c620276b7dfcc
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  RxSwift: 3789a1af753002a14edecdb698a2424624296a9c
 
-PODFILE CHECKSUM: fcf97519bed2395c2483fe9c28f3b00518decd1c
+PODFILE CHECKSUM: f8343bc1b71de2a440acc92ac805078f7ea79478
 
 COCOAPODS: 1.1.1
