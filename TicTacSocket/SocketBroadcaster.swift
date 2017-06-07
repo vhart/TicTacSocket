@@ -1,11 +1,13 @@
 import CocoaAsyncSocket
+import RxSwift
 
-@objc class SocketService: NSObject, GCDAsyncSocketDelegate {
+@objc class SocketBroadcaster: NSObject, GCDAsyncSocketDelegate, SocketHandler {
     let delegateQueue = DispatchQueue(label: "com.tictacsocket.app")
     var service: NetService?
     var services = [NetService]()
     var connectedSocket: GCDAsyncSocket?
-    var onJsonReceived: (([String: Any]) -> ())?
+    var onDidAcceptNewSocket: (() -> Void)?
+    private var jsonMessage: Variable<[String: Any]> = Variable([:])
 
     private var socket: GCDAsyncSocket!
 
@@ -38,11 +40,16 @@ import CocoaAsyncSocket
         connectedSocket?.send(packet: packet, tag: 0)
     }
 
+    func messageObservable() -> Observable<[String: Any]> {
+        return jsonMessage.asObservable()
+    }
+
     func socket(_ sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
         print("\(#function) sock: \(sock.connectedUrl), newSocket: \(newSocket)")
         connectedSocket = newSocket
         connectedSocket?.delegate = self
         connectedSocket?.readData(toLength: UInt(MemoryLayout<Int>.size), withTimeout: -1, tag: 1)
+        onDidAcceptNewSocket?()
     }
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
@@ -53,7 +60,7 @@ import CocoaAsyncSocket
             connectedSocket?.readData(toLength: UInt(bodyLength), withTimeout: -1, tag: 2)
         case 2:
             if let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) as? [String: Any] {
-                onJsonReceived?(json)
+                jsonMessage.value = json
             }
             connectedSocket?.readData(toLength: UInt(MemoryLayout<Int>.size), withTimeout: -1,  tag: 1)
         default: break
@@ -61,7 +68,7 @@ import CocoaAsyncSocket
     }
 }
 
-extension SocketService: NetServiceDelegate {
+extension SocketBroadcaster: NetServiceDelegate {
     func netServiceDidPublish(_ sender: NetService) {
         guard let service = service else { return }
         print("published on port \(service.port) / domain: \(service.domain) / \(service.type) / \(service.name)")

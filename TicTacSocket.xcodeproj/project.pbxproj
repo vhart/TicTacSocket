@@ -14,14 +14,20 @@
 		D564DABE1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564DABD1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift */; };
 		D5BEC9B11EB3DFD80085432E /* SocketConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BEC9B01EB3DFD80085432E /* SocketConnector.swift */; };
 		D5BEC9B31EB3EBA60085432E /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BEC9B21EB3EBA60085432E /* Packet.swift */; };
-		D5E185AD1EB2F6CB006E9407 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E185AC1EB2F6CB006E9407 /* Socket.swift */; };
+		D5E185AD1EB2F6CB006E9407 /* SocketBroadcaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E185AC1EB2F6CB006E9407 /* SocketBroadcaster.swift */; };
 		D5EE1F641EB28AEE0098AA99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EE1F631EB28AEE0098AA99 /* AppDelegate.swift */; };
-		D5EE1F661EB28AEE0098AA99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EE1F651EB28AEE0098AA99 /* ViewController.swift */; };
+		D5EE1F661EB28AEE0098AA99 /* SocketConnectivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EE1F651EB28AEE0098AA99 /* SocketConnectivityViewController.swift */; };
 		D5EE1F691EB28AEE0098AA99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5EE1F671EB28AEE0098AA99 /* Main.storyboard */; };
 		D5EE1F6B1EB28AEE0098AA99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5EE1F6A1EB28AEE0098AA99 /* Assets.xcassets */; };
 		D5EE1F6E1EB28AEE0098AA99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5EE1F6C1EB28AEE0098AA99 /* LaunchScreen.storyboard */; };
 		D5EE1F791EB28AEF0098AA99 /* TicTacSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EE1F781EB28AEF0098AA99 /* TicTacSocketTests.swift */; };
 		D5EE1F841EB28AEF0098AA99 /* TicTacSocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EE1F831EB28AEF0098AA99 /* TicTacSocketUITests.swift */; };
+		D5F828B31EE89DCA000F65A3 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F828B21EE89DCA000F65A3 /* Location.swift */; };
+		D5F828B51EE89EAC000F65A3 /* PacketDataDelimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F828B41EE89EAC000F65A3 /* PacketDataDelimiter.swift */; };
+		D5FA0BAC1ECB84A10051BD91 /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FA0BAB1ECB84A10051BD91 /* BoardModel.swift */; };
+		D5FA0BAE1ECB8EA70051BD91 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FA0BAD1ECB8EA70051BD91 /* BoardViewModel.swift */; };
+		D5FA0BB01ECBAB860051BD91 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FA0BAF1ECBAB860051BD91 /* GameViewController.swift */; };
+		D5FA0BB21ECBE4180051BD91 /* SocketHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FA0BB11ECBE4180051BD91 /* SocketHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,10 +56,10 @@
 		D564DABD1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GCDAsyncSocket+Packets.swift"; sourceTree = "<group>"; };
 		D5BEC9B01EB3DFD80085432E /* SocketConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketConnector.swift; sourceTree = "<group>"; };
 		D5BEC9B21EB3EBA60085432E /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
-		D5E185AC1EB2F6CB006E9407 /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
+		D5E185AC1EB2F6CB006E9407 /* SocketBroadcaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketBroadcaster.swift; sourceTree = "<group>"; };
 		D5EE1F601EB28AEE0098AA99 /* TicTacSocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5EE1F631EB28AEE0098AA99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D5EE1F651EB28AEE0098AA99 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D5EE1F651EB28AEE0098AA99 /* SocketConnectivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketConnectivityViewController.swift; sourceTree = "<group>"; };
 		D5EE1F681EB28AEE0098AA99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D5EE1F6A1EB28AEE0098AA99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D5EE1F6D1EB28AEE0098AA99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -64,6 +70,12 @@
 		D5EE1F7F1EB28AEF0098AA99 /* TicTacSocketUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacSocketUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5EE1F831EB28AEF0098AA99 /* TicTacSocketUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSocketUITests.swift; sourceTree = "<group>"; };
 		D5EE1F851EB28AEF0098AA99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5F828B21EE89DCA000F65A3 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		D5F828B41EE89EAC000F65A3 /* PacketDataDelimiter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacketDataDelimiter.swift; sourceTree = "<group>"; };
+		D5FA0BAB1ECB84A10051BD91 /* BoardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardModel.swift; sourceTree = "<group>"; };
+		D5FA0BAD1ECB8EA70051BD91 /* BoardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
+		D5FA0BAF1ECBAB860051BD91 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		D5FA0BB11ECBE4180051BD91 /* SocketHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketHandler.swift; sourceTree = "<group>"; };
 		F223E8B4997CC0C2FF1220F4 /* Pods-TicTacSocket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacSocket.release.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacSocket/Pods-TicTacSocket.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,13 +151,19 @@
 				D5EE1F6A1EB28AEE0098AA99 /* Assets.xcassets */,
 				D5EE1F631EB28AEE0098AA99 /* AppDelegate.swift */,
 				D564DABB1EB8195700346189 /* Board.swift */,
+				D5FA0BAB1ECB84A10051BD91 /* BoardModel.swift */,
+				D5FA0BAD1ECB8EA70051BD91 /* BoardViewModel.swift */,
 				D564DAB71EB7DDB900346189 /* Data+Extra.swift */,
 				D564DAB91EB8055700346189 /* DispatchQueue+Main.swift */,
 				D564DABD1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift */,
+				D5F828B41EE89EAC000F65A3 /* PacketDataDelimiter.swift */,
 				D5BEC9B21EB3EBA60085432E /* Packet.swift */,
-				D5E185AC1EB2F6CB006E9407 /* Socket.swift */,
+				D5F828B21EE89DCA000F65A3 /* Location.swift */,
+				D5FA0BAF1ECBAB860051BD91 /* GameViewController.swift */,
+				D5E185AC1EB2F6CB006E9407 /* SocketBroadcaster.swift */,
+				D5FA0BB11ECBE4180051BD91 /* SocketHandler.swift */,
 				D5BEC9B01EB3DFD80085432E /* SocketConnector.swift */,
-				D5EE1F651EB28AEE0098AA99 /* ViewController.swift */,
+				D5EE1F651EB28AEE0098AA99 /* SocketConnectivityViewController.swift */,
 				D5EE1F6C1EB28AEE0098AA99 /* LaunchScreen.storyboard */,
 				D5EE1F6F1EB28AEE0098AA99 /* Info.plist */,
 			);
@@ -360,13 +378,19 @@
 			files = (
 				D5BEC9B11EB3DFD80085432E /* SocketConnector.swift in Sources */,
 				D564DABA1EB8055700346189 /* DispatchQueue+Main.swift in Sources */,
-				D5EE1F661EB28AEE0098AA99 /* ViewController.swift in Sources */,
+				D5EE1F661EB28AEE0098AA99 /* SocketConnectivityViewController.swift in Sources */,
 				D5BEC9B31EB3EBA60085432E /* Packet.swift in Sources */,
+				D5FA0BB01ECBAB860051BD91 /* GameViewController.swift in Sources */,
 				D5EE1F641EB28AEE0098AA99 /* AppDelegate.swift in Sources */,
+				D5F828B31EE89DCA000F65A3 /* Location.swift in Sources */,
 				D564DAB81EB7DDB900346189 /* Data+Extra.swift in Sources */,
 				D564DABE1EB92C2F00346189 /* GCDAsyncSocket+Packets.swift in Sources */,
+				D5F828B51EE89EAC000F65A3 /* PacketDataDelimiter.swift in Sources */,
 				D564DABC1EB8195700346189 /* Board.swift in Sources */,
-				D5E185AD1EB2F6CB006E9407 /* Socket.swift in Sources */,
+				D5FA0BAE1ECB8EA70051BD91 /* BoardViewModel.swift in Sources */,
+				D5FA0BAC1ECB84A10051BD91 /* BoardModel.swift in Sources */,
+				D5E185AD1EB2F6CB006E9407 /* SocketBroadcaster.swift in Sources */,
+				D5FA0BB21ECBE4180051BD91 /* SocketHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

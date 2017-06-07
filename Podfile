@@ -3,7 +3,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'TicTacSocket' do
-  pod 'Starscream', '~> 2.0.3'
   pod 'CocoaAsyncSocket'
-  pod 'SwiftyJSON'
+  pod 'Cartography'
+  pod 'RxSwift', '~> 3.0'
 end

@@ -32,7 +32,7 @@ class SocketConnectivityViewController: UIViewController {
     @IBOutlet weak var clientButton: UIButton!
 
     private(set) var connector: SocketConnector?
-    private var broadcaster: SocketService?
+    private var broadcaster: SocketBroadcaster?
 
     private(set) var role: Role = .none {
         didSet {
@@ -46,29 +46,46 @@ class SocketConnectivityViewController: UIViewController {
         socketTable.dataSource = self
         serverButton.layer.cornerRadius = 10
         clientButton.layer.cornerRadius = 10
-
-        let board = Board(frame: socketTable.bounds)
-        view.addSubview(board)
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let board = Board(frame: socketTable.frame)
+        board.addCloseButton { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.socketTable.frame = board.frame
+            UIView.transition(from: board,
+                              to: strongSelf.socketTable,
+                              duration: 2.0,
+                              options: .transitionCrossDissolve,
+                              completion: nil)
+        }
+    }
+
     @IBAction func actAsServerTapped(_ sender: Any) {
         guard role != .server else { return }
         role = .server
         connector = nil
         socketTable.reloadData()
-        broadcaster = SocketService()
-        broadcaster?.onJsonReceived = { json in
+        broadcaster = SocketBroadcaster()
+
+        broadcaster?.onDidAcceptNewSocket = { _ in
             DispatchQueue.executeOnMainThread { [weak self] in
-                guard self?.role == .server else { return }
-                self?.dataLabel.text = "\(json)"
+                guard let broadcaster = self?.broadcaster
+                    else { return }
+                let gameVC = GameViewController.fromStoryboard(with: broadcaster, mark: .x, size: 3)
+                self?.navigationController?.pushViewController(gameVC, animated: true)
             }
         }
+
         do {
             try broadcaster?.broadcast()
         } catch {
             print(error)
         }
     }
-    @IBAction func actAsClientTapped(_ sender: Any) {
+
+    @IBAction func clientButtonTapped(_ sender: Any) {
         guard role != .client else { return }
         role = .client
         broadcaster = nil
@@ -80,7 +97,7 @@ class SocketConnectivityViewController: UIViewController {
     @IBAction func sendPacketTapped(_ sender: Any) {
         let row = Int(arc4random_uniform(10))
         let col = Int(arc4random_uniform(10))
-        let location = Location(objectType: .locationPacket, row: row, col: col)
+        let location = Location(row: row, col: col)
 
         switch role {
         case .client: connector?.send(packet: location)
@@ -132,6 +149,9 @@ extension SocketConnectivityViewController: SocketConnectorDelegate {
     func connectorDidConnect(connector: SocketConnector, service: NetService) {
         DispatchQueue.executeOnMainThread { [weak self] in
             self?.socketTable.reloadData()
+
+            let gameVC = GameViewController.fromStoryboard(with: connector, mark: .o, size: 3)
+            self?.navigationController?.pushViewController(gameVC, animated: true)
         }
     }
 

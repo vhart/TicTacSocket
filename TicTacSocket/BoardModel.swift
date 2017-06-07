@@ -1,9 +1,90 @@
-//
-//  BoardModel.swift
-//  TicTacSocket
-//
-//  Created by Varinda Hart on 5/16/17.
-//  Copyright © 2017 ShopKeep. All rights reserved.
-//
+enum Mark: Int {
+    case x = -1
+    case o = 1
+    case none = 0
 
-import Foundation
+    var description: String {
+        switch self {
+        case .x: return "X"
+        case .o: return "O"
+        case .none: return ""
+        }
+    }
+}
+
+class BoardModel {
+
+    enum CrossSection: String {
+        case row
+        case column
+        case diagLeftTopRightBottom
+        case diagLeftBottomRightTop
+
+        static func string(_ section: CrossSection, variation: Int) -> String {
+            return "\(section.rawValue)\(variation)"
+        }
+    }
+
+    let size: Int
+    var boardValues = [[Mark]]()
+    var runningSums = [String: Int]()
+
+    init?(size: Int) {
+        guard size > 0 else { return nil }
+        self.size = size
+
+        for i in 0..<size {
+            boardValues.append([Mark](repeating: .none, count: size))
+            runningSums[CrossSection.string(.row, variation: i)] = 0
+            runningSums[CrossSection.string(.column, variation: i)] = 0
+        }
+
+        runningSums[CrossSection.diagLeftTopRightBottom.rawValue] = 0
+        runningSums[CrossSection.diagLeftBottomRightTop.rawValue] = 0
+    }
+
+    func update(row: Int, col: Int, mark: Mark) {
+        let range = 0..<size
+        guard range ~= row, range ~= col else { return }
+        boardValues[row][col] = mark
+        updateSums(row: row, col: col, mark: mark)
+    }
+
+    func winningMark() -> Mark {
+        for sum in runningSums.values {
+            switch sum {
+            case Mark.o.rawValue * size: return .o
+            case Mark.x.rawValue * size: return .x
+            default: continue
+            }
+        }
+        return .none
+    }
+
+    private func updateSums(row: Int, col: Int, mark: Mark) {
+        let range = 0..<size
+        guard range ~= row, range ~= col else { return }
+        let rowString = CrossSection.string(.row, variation: row)
+        let colString = CrossSection.string(.row, variation: col)
+        var keys = [rowString, colString]
+        if row == col {
+            keys.append(CrossSection.diagLeftTopRightBottom.rawValue)
+        }
+        if col == size - row - 1 {
+            keys.append(CrossSection.diagLeftBottomRightTop.rawValue)
+        }
+
+        for key in keys {
+            if let value = runningSums[key] {
+                runningSums[key] = value + mark.rawValue
+            }
+        }
+    }
+}
+
+extension Array {
+    func safeIndex(_ i: Int) -> Element? {
+        guard i < count else { return nil }
+        return self[i]
+    }
+}
