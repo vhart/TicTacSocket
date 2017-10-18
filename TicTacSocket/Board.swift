@@ -11,6 +11,7 @@ class Board: UIView {
 
     private let dimension: CGFloat = 50
     private let margin: CGFloat = 10
+    private var strikeThroughView: UIView?
     private var strikeThrough: CAShapeLayer?
 
     override init(frame: CGRect) {
@@ -123,16 +124,22 @@ class Board: UIView {
                                y: endButton.frame.maxY)
         }
 
-        var path = UIBezierPath()
+        let path = UIBezierPath()
         path.move(to: startPoint)
         path.addLine(to: endPoint)
 
         let line = CAShapeLayer()
+        line.path = path.cgPath
         line.frame = self.bounds
         line.lineWidth = 2.0
         line.strokeColor = UIColor.blue.cgColor
-        //line.strokeStart
+        strikeThrough = line
+        layer.addSublayer(line)
 
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+            self?.strikeThrough?.strokeStart = 0
+            self?.strikeThrough?.strokeEnd = 1
+        }
     }
 
     @objc fileprivate func callCloseBlock() {

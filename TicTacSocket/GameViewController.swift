@@ -89,9 +89,10 @@ class GameViewController: UIViewController {
 
     func setUpListener() {
         socketHandler.messageObservable()
-            .subscribe { [weak self] event in
-                guard let json = event.element,
-                    let strongSelf = self
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] json in
+                
+                guard let strongSelf = self
                     else { return }
                 if let location = Location(json: json) {
                     let mark: Mark = strongSelf.mark == .o ? .x : .o
@@ -99,14 +100,21 @@ class GameViewController: UIViewController {
                         .updateBoard(location: location,
                                      mark: mark)
 
-                    DispatchQueue.executeOnMainThread { [weak self] in
-                        if let button = self?.board?.buttons[location.row][location.col] {
-                            self?.update(button: button)
-                        }
-                        self?.gameState = .active
+                    if let button = self?.board?.buttons[location.row][location.col] {
+                        self?.update(button: button)
                     }
+                    self?.gameState = .active
                 }
-            }.addDisposableTo(disposeBag)
+        }).addDisposableTo(disposeBag)
+
+        boardViewModel.winnersPath
+            .asObservable()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] winningPath in
+                self?.gameState = .ended
+                self?.board?
+                    .drawStrikeFrom(start: winningPath.path.start, end: winningPath.path.end)
+            }).addDisposableTo(disposeBag)
     }
 
     func update(button: UIButton) {

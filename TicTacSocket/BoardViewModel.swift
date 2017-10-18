@@ -1,12 +1,17 @@
-struct BoardViewModel {
+import RxSwift
+
+class BoardViewModel {
     let size: Int
+    let winnersPath = PublishSubject<(mark: Mark, path: (start: Location, end: Location))>()
     private let boardModel: BoardModel
+    private let disposeBag = DisposeBag()
 
     init?(size: Int) {
         guard let boardModel = BoardModel(size: size)
             else { return nil }
         self.size = size
         self.boardModel = boardModel
+        setUpObservers()
     }
 
     func buttonTitle(forTag tag: Int) -> String? {
@@ -25,6 +30,16 @@ struct BoardViewModel {
 
     func updateBoard(row: Int, col: Int, mark: Mark) {
         boardModel.update(row: row, col: col, mark: mark)
+    }
+
+    private func setUpObservers() {
+        boardModel.winner
+            .asObservable()
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] winningMark in
+                guard let path = self?.boardModel.winningPath() else { return }
+                self?.winnersPath.onNext((mark: winningMark, path: path))
+            }).addDisposableTo(disposeBag)
     }
 
     private func mark(forTag tag: Int) -> Mark? {

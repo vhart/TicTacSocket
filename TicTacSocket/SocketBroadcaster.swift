@@ -2,12 +2,12 @@ import CocoaAsyncSocket
 import RxSwift
 
 @objc class SocketBroadcaster: NSObject, GCDAsyncSocketDelegate, SocketHandler {
-    let delegateQueue = DispatchQueue(label: "com.tictacsocket.app")
+    let delegateQueue = DispatchQueue(label: "com.tictacsocket.broadcaster.queue")
     var service: NetService?
     var services = [NetService]()
     var connectedSocket: GCDAsyncSocket?
     var onDidAcceptNewSocket: (() -> Void)?
-    private var jsonMessage: Variable<[String: Any]> = Variable([:])
+    private var jsonMessage = PublishSubject<[String: Any]>()
 
     private var socket: GCDAsyncSocket!
 
@@ -48,23 +48,21 @@ import RxSwift
         print("\(#function) sock: \(sock.connectedUrl), newSocket: \(newSocket)")
         connectedSocket = newSocket
         connectedSocket?.delegate = self
-        connectedSocket?.readData(toLength: UInt(MemoryLayout<Int>.size), withTimeout: -1, tag: 1)
+        connectedSocket?.queueNextRead()
         onDidAcceptNewSocket?()
     }
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
         switch tag {
         case 1:
-            let receiveBuffer = data.bufferedBytes()
-            let bodyLength = Int(buffer: receiveBuffer)
-            connectedSocket?.readData(toLength: UInt(bodyLength), withTimeout: -1, tag: 2)
-        case 2:
-            if let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) as? [String: Any] {
-                jsonMessage.value = json
+            if let jsonData = PacketDataDelimiter.stripDelimiter(from: data),
+               let json = (try? JSONSerialization.jsonObject(with: jsonData, options: []))
+                as? [String: Any] {
+                jsonMessage.onNext(json)
             }
-            connectedSocket?.readData(toLength: UInt(MemoryLayout<Int>.size), withTimeout: -1,  tag: 1)
         default: break
         }
+        connectedSocket?.queueNextRead()
     }
 }
 

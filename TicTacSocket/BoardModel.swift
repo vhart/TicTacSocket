@@ -1,3 +1,5 @@
+import RxSwift
+
 enum Mark: Int {
     case x = -1
     case o = 1
@@ -21,13 +23,14 @@ class BoardModel {
         case diagLeftBottomRightTop
 
         static func string(_ section: CrossSection, variation: Int) -> String {
-            return "\(section.rawValue)\(variation)"
+            return "\(section.rawValue)+\(variation)"
         }
     }
 
     let size: Int
     var boardValues = [[Mark]]()
     var runningSums = [String: Int]()
+    let winner = Variable<Mark>(.none)
 
     init?(size: Int) {
         guard size > 0 else { return nil }
@@ -48,6 +51,7 @@ class BoardModel {
         guard range ~= row, range ~= col else { return }
         boardValues[row][col] = mark
         updateSums(row: row, col: col, mark: mark)
+        winner.value = winningMark()
     }
 
     func winningMark() -> Mark {
@@ -61,11 +65,49 @@ class BoardModel {
         return .none
     }
 
+    func winningPath() -> (start: Location, end: Location)? {
+        guard winningMark() != .none else { return nil }
+        var winningKey: String?
+        for (key, sum) in runningSums {
+            if sum == Mark.o.rawValue * size || sum == Mark.x.rawValue * size {
+                winningKey = key
+                break
+            }
+        }
+        guard let sectionKey = winningKey else { return nil }
+
+        switch sectionKey {
+        case CrossSection.diagLeftBottomRightTop.rawValue:
+            return (start: Location(row: size - 1, col: 0), end: Location(row: 0, col: size - 1))
+        case CrossSection.diagLeftTopRightBottom.rawValue:
+            return (start: Location(row: 0, col: 0), end: Location(row: size - 1, col: size - 1))
+        default:
+            break
+        }
+
+        let components = sectionKey.components(separatedBy: "+")
+
+        guard components.count == 2,
+            let section = components.first,
+            let indexString = components.last,
+            let index = Int(indexString)
+            else { return nil }
+
+        switch section {
+        case CrossSection.column.rawValue:
+            return (start: Location(row: 0, col: index), end: Location(row: size - 1, col: index))
+        case CrossSection.row.rawValue:
+            return (start: Location(row: index, col: 0), end: Location(row: index, col: size - 1))
+        default:
+            return nil
+        }
+    }
+
     private func updateSums(row: Int, col: Int, mark: Mark) {
         let range = 0..<size
         guard range ~= row, range ~= col else { return }
         let rowString = CrossSection.string(.row, variation: row)
-        let colString = CrossSection.string(.row, variation: col)
+        let colString = CrossSection.string(.column, variation: col)
         var keys = [rowString, colString]
         if row == col {
             keys.append(CrossSection.diagLeftTopRightBottom.rawValue)

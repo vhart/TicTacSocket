@@ -14,12 +14,14 @@ protocol SocketConnectorDelegate: class {
     var service: NetService?
     var socket: GCDAsyncSocket?
     weak var delegate: SocketConnectorDelegate?
-    private var jsonMessage: Variable<[String: Any]> = Variable([:])
+    let delegateQueue = DispatchQueue(label: "com.tictacsocket.connector.queue")
+    private var jsonMessage = PublishSubject<[String: Any]>()
 
     func startBrowsing() {
         services = []
         serviceBrowser.delegate = self
-        serviceBrowser.searchForServices(ofType: "_http._tcp", inDomain: "local.")
+        serviceBrowser.searchForServices(ofType: "_tutorial._tcp"
+            , inDomain: "local.")
     }
 
     func send(packet: Packet) {
@@ -62,7 +64,7 @@ protocol SocketConnectorDelegate: class {
                 tryConnecting(currentSocket, onComplete:onComplete)
             }
         } else {
-            let newSocket = GCDAsyncSocket(delegate: self, delegateQueue: DispatchQueue.main)
+            let newSocket = GCDAsyncSocket(delegate: self, delegateQueue: delegateQueue)
             socket = newSocket
             tryConnecting(newSocket, onComplete: onComplete)
         }
@@ -98,7 +100,6 @@ protocol SocketConnectorDelegate: class {
             }
         }
 
-
         connect(to: sender) { [weak self] status in
             switch status {
             case true:
@@ -118,11 +119,6 @@ protocol SocketConnectorDelegate: class {
         self.service = nil
     }
 
-    func netService(_ sender: NetService, didUpdateTXTRecord data: Data) {
-        if let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) as? [String: Any] {
-            delegate?.connectorDidReceive(json: json)
-        }
-    }
     // MARK: NetServiceBrowserDelegate
 
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
@@ -142,25 +138,21 @@ protocol SocketConnectorDelegate: class {
 
     func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16) {
         print("Connected to host: \(host) on port \(port)")
-        socket?.readData(toLength: UInt(MemoryLayout.size(ofValue: Int())),
-                         withTimeout: -1,
-                         tag: 1)
+        socket?.queueNextRead()
     }
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
+        print(Thread.isMainThread)
         switch tag {
         case 1:
-            let receiveBuffer = data.bufferedBytes()
-            let bodyLength = Int(buffer: receiveBuffer)
-            socket?.readData(toLength: UInt(bodyLength), withTimeout: -1, tag: 2)
-        case 2:
-            if let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) as? [String: Any] {
-                delegate?.connectorDidReceive(json: json)
-                jsonMessage.value = json
+            if let jsonData = PacketDataDelimiter.stripDelimiter(from: data),
+                let json = (try? JSONSerialization.jsonObject(with: jsonData, options: []))
+                    as? [String: Any] {
+                jsonMessage.onNext(json)
             }
-            socket?.readData(toLength: UInt(MemoryLayout.size(ofValue: Int())), withTimeout: -1,  tag: 1)
         default: break
         }
+        socket?.queueNextRead()
     }
 }
 

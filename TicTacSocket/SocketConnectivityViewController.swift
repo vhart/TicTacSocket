@@ -50,6 +50,7 @@ class SocketConnectivityViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
         let board = Board(frame: socketTable.frame)
         board.addCloseButton { [weak self] in
             guard let strongSelf = self else { return }
@@ -92,18 +93,6 @@ class SocketConnectivityViewController: UIViewController {
         connector = SocketConnector()
         connector?.delegate = self
         connector?.startBrowsing()
-    }
-
-    @IBAction func sendPacketTapped(_ sender: Any) {
-        let row = Int(arc4random_uniform(10))
-        let col = Int(arc4random_uniform(10))
-        let location = Location(row: row, col: col)
-
-        switch role {
-        case .client: connector?.send(packet: location)
-        case .server: broadcaster?.send(packet: location)
-        case .none: break
-        }
     }
 }
 
